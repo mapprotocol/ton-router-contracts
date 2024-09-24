@@ -13,8 +13,8 @@ export async function run(provider: NetworkProvider) {
     const tonRouterV2 = provider.open(
         TonRouterV2.createFromConfig(
             {
-                order_id: 100000000000,
-                swap_id: 100000000000,
+                order_id: 0,
+                swap_id: 0,
                 owner: sender,
                 withdrawer: Address.parse(WITHDRAWER),
                 // withdrawer: sender,

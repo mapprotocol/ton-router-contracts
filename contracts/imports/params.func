@@ -11,6 +11,7 @@ const int op::swap_callback = "op::swap_callback"c;
 const int op::bridge_out = "op::bridge"c; ;; f361efcb
 const int op::transfer = 0xf8a7ea5;
 const int op::transfer_notification = 0x7362d09c;
+const int op::dedust::payout = 0x474f86cf;
 
 ;; Admin function params
 const op::admin::update_owner = "op::admin::update_owner"c; ;; f361efcb
@@ -21,5 +22,5 @@ const op::bridger::bridge_in = "op::bridger::bridge_in"c; ;; f361efcb
 
 const int min_ton_bridge_out_amount = 100000000;
 
-const int CHAIN_POOL_ID = 70;
+const int CHAIN_POOL_ID = 71;
 const slice USDT_MASTER_ADDRESS = "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs";

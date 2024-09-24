@@ -60,3 +60,16 @@ slice calculate_user_jetton_wallet_address(slice owner_address, slice jetton_mas
 
     send_raw_message(msg, 1);  ;; mode 1 to add fees from contract balance
 }
+
+() send_ton(slice to_address, int amount, int query_id, int send_mode) impure {
+    cell msg = begin_cell()
+        .store_uint(0x10, 6)  ;; nobounce - int_msg_info$0 ihr_disabled:Bool bounce:Bool bounced:Bool src:MsgAddress -> 011000
+        .store_slice(to_address)
+        .store_coins(amount)
+        .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+        .store_uint(0, 32)  ;; empty body
+        .store_uint(query_id, 64)
+        .end_cell();
+
+    send_raw_message(msg, send_mode);
+}

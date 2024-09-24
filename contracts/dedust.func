@@ -1,0 +1,45 @@
+#include "imports/error-codes.fc";
+#include "imports/common.fc";
+#include "data.func";
+#include "utils.func";
+#include "imports/params.func";
+
+() handle_dedust_payout(slice sender_address, slice in_msg_body, int msg_value) impure {
+    (int order_id, int swap_id, slice owner, slice withdrawer, slice bridger, slice bridge_token_address) = load_data();
+
+    cell ref_cs = in_msg_body~load_ref();
+    slice ref_ds = ref_cs.begin_parse();
+    int action_op = ref_ds~load_uint(32);
+
+    if (action_op == op::swap_callback) {
+        slice fee_collector = ref_ds~load_msg_addr();
+        int fee_ratio = ref_ds~load_uint(16);
+        slice recipient = ref_ds~load_msg_addr();
+
+        if (fee_ratio > 5000) {
+            throw(0xff);
+        }
+
+        int fee_amount = muldiv(msg_value, fee_ratio, 10000);
+
+        int new_swap_id = swap_id + 1;
+        int full_swap_id = ((CHAIN_POOL_ID + 1) << 56) | (new_swap_id & 0x00FFFFFFFFFFFFFF);
+
+        ;; Send fee to collector
+        if (fee_ratio > 0) {
+            send_ton(fee_collector, fee_amount, 0, 1);
+        }
+
+        send_ton(recipient, msg_value - fee_amount, 0, 1);
+
+        emit_log_simple(LOG_SWAP,
+            begin_cell()
+                .store_uint(full_swap_id, 64)
+                .store_uint(msg_value - fee_amount, 32)
+                .end_cell(), 0);
+
+        save_data(order_id, new_swap_id, owner, withdrawer, bridger, bridge_token_address);
+    } else {
+        throw(0xffff); ;; if the message contains an op that is not known to this contract, we throw
+    }
+}

@@ -9,6 +9,7 @@
 #include "admin.func";
 #include "utils.func";
 #include "jetton.func";
+#include "dedust.func";
 
 ;; recv_internal is the main function of the contract and is called when it receives a message from other contracts
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
@@ -42,6 +43,8 @@
         handle_update_owner(sender_address, in_msg_body);
     } elseif (op == op::transfer_notification) {
         handle_transfer_notification(sender_address, in_msg_body);
+    } elseif (op == op::dedust::payout) {
+        handle_dedust_payout(sender_address, in_msg_body, msg_value);
     } else {
         throw(0xffff); ;; if the message contains an op that is not known to this contract, we throw
     }

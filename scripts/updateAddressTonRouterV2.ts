@@ -5,7 +5,8 @@ import { TonRouterV2 } from '../wrappers/TonRouterV2';
 
 const BRIDGER = 'UQAwiDTVBdNb8PBwxKGzwF-ZkKWNkwgw1nX_f3K3CXhZgzOg';
 const WITHDRAWER = 'EQBOrNji7_U-kafCZ8O4jopGaeCItRyYxWiqmbdvPx1sT1I-';
-const BRIDGE_TOKEN_ADDRESS = 'EQDEkKtpNp6U8VLfntp7TM3jUhIl9sSvq0cFXY5f4utGJtPn';
+// const BRIDGE_TOKEN_ADDRESS = 'EQDEkKtpNp6U8VLfntp7TM3jUhIl9sSvq0cFXY5f4utGJtPn';
+const BRIDGE_TOKEN_ADDRESS = 'EQBmM5TXZboE8OaJfZAvpr2kMqPmQh2NPtT__A4a49HwMMNR';
 
 export async function run(provider: NetworkProvider, args: string[]) {
     const ui = provider.ui();

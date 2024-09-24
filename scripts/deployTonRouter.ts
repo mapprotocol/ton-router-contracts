@@ -20,7 +20,7 @@ export async function run(provider: NetworkProvider) {
                 // withdrawer: Address.parse(WITHDRAWER),
                 withdrawer: sender,
                 bridger: Address.parse(BRIDGER),
-                bridge_token_address: sender,
+                bridge_tokecn_address: sender,
             },
             await compile('TonRouter'),
         ),
